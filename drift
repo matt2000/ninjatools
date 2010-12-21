@@ -1,13 +1,15 @@
 #!/bin/bash
-if [[ $1 == "-h" || $1 == "--help" || $1 == "" ]]
+if [[ $1 == "" ]]
+then
+  REMOTE="`cat .drifthost`"
+  WEBROOT="`cat .driftpath`"
+elif [[ $1 == "-h" || $1 == "--help" ]]
 then
   echo "Replaces database for current site with remote database. Requires Drush."
   echo "Usage: drift [user@host] /path/to/site"
+  echo "You'll be prompted for confirmation. Answering (b)ackup will cause a back-up of the current database to be saved before it is replaced with the remote database. Answering (d)ownload will cause the remote database to be downloaded only, leaving the current database unchanged."
   exit 0
-fi
-
-
-if [ $2 ]
+elif [ $2 ]
 then
   WEBROOT="$2"
   REMOTE="$1"
@@ -20,10 +22,11 @@ FILENAME="drift-$DATE.sql.gz"
 TMPLOCAL="/tmp/drift-local/"
 TMPREMOTE="/tmp/drift-remote/"
 
+echo "'drift -h' for usage info."
 echo "The following database will be overwritten:"
 drush sql-conf
 
-read -p "Are you sure you want to continue? <No/yes/backup/dryrun> " prompt
+read -p "Are you sure you want to continue? <No/yes/backup/download> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
   echo "OK. Continuing."
