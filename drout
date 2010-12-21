@@ -1,0 +1,25 @@
+#!/bin/bash
+#checks out a Drupal module into current directory
+
+mod="$1"
+
+ver="$2"
+
+if [ "$ver" != "HEAD" ]
+then
+  if [ "$3" ]
+    then
+      maj="DRUPAL-"$3"--"
+    else
+      maj="DRUPAL-6--"
+  fi
+fi
+
+if [ -z "$ver" ]
+then
+  ver=1
+fi
+
+cvs -z6 -d:pserver:anonymous:anonymous@cvs.drupal.org:/cvs/drupal-contrib checkout -d $mod -r $maj$ver contributions/modules/$mod
+
+

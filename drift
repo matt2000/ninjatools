@@ -1,0 +1,66 @@
+#!/bin/bash
+if [[ $1 == "-h" || $1 == "--help" || $1 == "" ]]
+then
+  echo "Replaces database for current site with remote database. Requires Drush."
+  echo "Usage: drift [user@host] /path/to/site"
+  exit 0
+fi
+
+
+if [ $2 ]
+then
+  WEBROOT="$2"
+  REMOTE="$1"
+else
+  WEBROOT="$1"
+fi
+
+DATE=`date +%F-%H%M`
+FILENAME="drift-$DATE.sql.gz"
+TMPLOCAL="/tmp/drift-local/"
+TMPREMOTE="/tmp/drift-remote/"
+
+echo "The following database will be overwritten:"
+drush sql-conf
+
+read -p "Are you sure you want to continue? <No/yes/backup/dryrun> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+  echo "OK. Continuing."
+elif [[ $prompt == 'b' || $prompt == 'backup' ]]
+then
+  mkdir $TMPLOCAL
+  echo "Backing up to $TMPLOCAL$FILENAME"
+  drush sql-dump | gzip -c > $TMPLOCAL$FILENAME
+elif [[ $prompt == 'd' || $promt == 'dryrun' ]]
+then
+  DRYRUN=1
+  echo "Downloading database to $TMPREMOTE only. Database will not be overwritten."
+else
+  echo "Aborting."
+  exit 0
+fi
+
+COMMAND="mkdir $TMPREMOTE; cd $WEBROOT && drush sql-dump | gzip -c > $TMPREMOTE$FILENAME"
+
+if [ $REMOTE ]
+then
+  ssh $REMOTE $COMMAND
+  mkdir $TMPREMOTE
+  scp $REMOTE:$TMPREMOTE$FILENAME $TMPREMOTE
+  ssh $REMOTE "rm $TMPREMOTE$FILENAME"
+else
+  #TODO - test. not sure this actually works.
+  ORIGIN=`pwd`
+  $COMMAND
+  cd $ORIGIN
+fi
+  
+
+if [ $DRYRUN ]
+then
+  echo "Database dump saved to $TMPREMOTE$FILENAME"
+else
+  echo 'Overwriting database.'
+  zcat $TMPREMOTE$FILENAME | `drush sql-connect`
+fi
