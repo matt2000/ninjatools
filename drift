@@ -66,4 +66,5 @@ then
 else
   echo 'Overwriting database.'
   zcat $TMPREMOTE$FILENAME | `drush sql-connect`
+  drush cc all
 fi
