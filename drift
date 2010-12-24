@@ -53,9 +53,9 @@ then
   scp $REMOTE:$TMPREMOTE$FILENAME $TMPREMOTE
   ssh $REMOTE "rm $TMPREMOTE$FILENAME"
 else
-  #TODO - test. not sure this actually works.
   ORIGIN=`pwd`
-  $COMMAND
+  eval $COMMAND
+  echo $COMMAND
   cd $ORIGIN
 fi
   
