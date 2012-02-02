@@ -1,0 +1,3 @@
+name = Ninja Tools
+description = Utility functions Ninjas should like.
+core = 7.x
