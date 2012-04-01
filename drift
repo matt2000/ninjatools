@@ -3,6 +3,7 @@ if [[ $1 == "" ]]
 then
   REMOTE="`cat .drifthost`"
   WEBROOT="`cat .driftpath`"
+  PORT="`cat .driftport`"
 elif [[ $1 == "-h" || $1 == "--help" ]]
 then
   echo "Replaces database for current site with remote database. Requires Drush."
@@ -48,10 +49,10 @@ COMMAND="mkdir $TMPREMOTE; cd $WEBROOT && drush sql-dump | gzip -c > $TMPREMOTE$
 
 if [ $REMOTE ]
 then
-  ssh $REMOTE $COMMAND
+  ssh -p $PORT $REMOTE $COMMAND
   mkdir $TMPREMOTE
-  scp $REMOTE:$TMPREMOTE$FILENAME $TMPREMOTE
-  ssh $REMOTE "rm $TMPREMOTE$FILENAME"
+  scp -P $PORT $REMOTE:$TMPREMOTE$FILENAME $TMPREMOTE
+  ssh -p $PORT $REMOTE "rm $TMPREMOTE$FILENAME"
 else
   ORIGIN=`pwd`
   eval $COMMAND
