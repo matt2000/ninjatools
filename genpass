@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ -z $1]; then
+  echo "Usage: $0 example.com [lenght=18]"
+  exit 0
+fi
+
+if [ ! -a ~/.genpass]; then
+  echo "Error, no salt."
+  #@todo generate
+fi
+
+salt=`cat ~/.genpass`
+site=$1
+len=18
+if [ ! -z $2 ]; then
+  len=$2
+fi
+
+echo 'Enter passphrase:'
+read passphrase
+clear
+
+echo "$site$passphrase$salt"|sha1sum |base64|cut -c1-$len
