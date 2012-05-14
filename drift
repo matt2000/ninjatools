@@ -3,7 +3,12 @@ if [[ $1 == "" ]]
 then
   REMOTE="`cat .drifthost`"
   WEBROOT="`cat .driftpath`"
-  PORT="`cat .driftport`"
+  if [ -e ".driftport" ]
+  then
+    PORT="`cat .driftport`"
+  else
+    PORT="22"
+  fi
 elif [[ $1 == "-h" || $1 == "--help" ]]
 then
   echo "Replaces database for current site with remote database. Requires Drush."
