@@ -41,7 +41,7 @@ function nfastdelete($value, $column = 'type') {
 }
 
 /**
- * Returns TRUE if we are running from Drush ev
+ * Returns TRUE if we are running from Drush ev or scr
  *
  * @todo Drush must have a built-in way to do this.
  * @todo make generic to any CLI
@@ -50,5 +50,5 @@ function ndrush() {
   $cli_args = $_SERVER['argv'];
   
   return strpos($cli_args[0], 'drush') !== FALSE
-     AND $cli_args[1] == 'ev';
+     AND (in_array('ev', $cli_args) OR in_array('scr', $cli_args));
 }
