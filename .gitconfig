@@ -4,9 +4,11 @@
 	mail = Matt@NinjitsuWeb.com
 [core]
 	editor = vim
-        whitespace=fix,-indent-with-non-tab,-indent-with-tab,trailing-space,cr-at-eol
+  whitespace=fix,-indent-with-non-tab,-indent-with-tab,trailing-space,cr-at-eol
 [push]
 	default = current
+[merge]
+  defaultToUpstream = true
 [alias]
   st = status
   ci = commit
@@ -15,8 +17,13 @@
   unstage = reset HEAD
   df = !git diff && git diff --staged
   clear = reset --hard
-  up = !git stash && git pull origin master && git stash pop
+  up = !git stash && git pull && git stash pop
+  upr = !git pull && git rebase 
   re = remote -v
+  mergekeep = merge -s recursive -X ours
+  keep = merge -s recursive -X ours
+  mergetoss = merge -s recursive -X theirs
+  toss = merge -s recursive -X theirs
 
 [color]
   ui = auto
