@@ -1,16 +1,18 @@
 #!/bin/bash
 
-if [ -z $1]; then
+if [ -z $1 ]; then
   echo "Usage: $0 example.com [lenght=18]"
   exit 0
 fi
 
-if [ ! -a ~/.genpass]; then
+if [ ! -c ~/.genpass ]; then
   echo "Error, no salt."
+  salt=''
   #@todo generate
+else
+  salt=`cat ~/.genpass`
 fi
 
-salt=`cat ~/.genpass`
 site=$1
 len=18
 if [ ! -z $2 ]; then
@@ -18,7 +20,9 @@ if [ ! -z $2 ]; then
 fi
 
 echo 'Enter passphrase:'
+stty_orig=`stty -g` 
+stty -echo
 read passphrase
-clear
+stty $stty_orig
 
 echo "$site$passphrase$salt"|sha1sum |base64|cut -c1-$len
