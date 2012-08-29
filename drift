@@ -19,8 +19,10 @@ elif [ $2 ]
 then
   WEBROOT="$2"
   REMOTE="$1"
+  PORT="22"
 else
   WEBROOT="$1"
+  PORT="22"
 fi
 
 DATE=`date +%F-%H%M`
