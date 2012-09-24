@@ -41,14 +41,8 @@ function nfastdelete($value, $column = 'type') {
 }
 
 /**
- * Returns TRUE if we are running from Drush ev or scr
- *
- * @todo Drush must have a built-in way to do this.
- * @todo make generic to any CLI
+ * Returns TRUE if we are running from Drush ev or scr or some other CLI.
  */
 function ndrush() {
-  $cli_args = $_SERVER['argv'];
-  
-  return strpos($cli_args[0], 'drush') !== FALSE
-     AND (in_array('ev', $cli_args) OR in_array('scr', $cli_args));
+  return php_sapi_name() == 'cli'
 }
