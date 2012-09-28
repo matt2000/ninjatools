@@ -10,12 +10,14 @@
 [merge]
   defaultToUpstream = true
 [alias]
-  st = status
+  st = status -sb
+  ll = log --oneline --decorate
   ci = commit
-  br = branch
+  br = branch -v
   co = checkout
   unstage = reset HEAD
   df = !git diff && git diff --staged
+  wd = diff --word-diff
   clear = reset --hard
   up = !git stash && git pull && git stash pop
   upr = !git pull && git rebase 
