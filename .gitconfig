@@ -12,6 +12,7 @@
 [alias]
   st = status -sb
   ll = log --oneline --decorate
+  ls = log --name-status
   ci = commit
   br = branch -v
   co = checkout
