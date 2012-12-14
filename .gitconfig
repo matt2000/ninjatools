@@ -11,10 +11,11 @@
   defaultToUpstream = true
 [alias]
   st = status -sb
-  ll = log --oneline --decorate
+  ll = log --pretty=format:'%C(yellow)%h %Cblue%an%Cgreen%d %Creset%s'
   ls = log --name-status
   ci = commit
   br = branch -v
+  bc = !git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d
   co = checkout
   unstage = reset HEAD
   df = !git diff && git diff --staged
