@@ -21,8 +21,8 @@
   df = !git diff && git diff --staged
   wd = diff --word-diff
   clear = reset --hard
-  up = !git stash && git pull && git stash pop
-  upr = !git pull && git rebase 
+  up = !git stash && git fetch && git rebase
+  upp = !git pull
   re = remote -v
   mergekeep = merge -s recursive -X ours
   keep = merge -s recursive -X ours
