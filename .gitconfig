@@ -28,6 +28,7 @@
   keep = merge -s recursive -X ours
   mergetoss = merge -s recursive -X theirs
   toss = merge -s recursive -X theirs
+  changelog = log --pretty=format:'%s by %an (%h)'
 
 [color]
   ui = auto
