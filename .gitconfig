@@ -40,3 +40,5 @@
   new = green bold
   whitespace = red reverse
 
+[branch]
+	autosetuprebase = always
