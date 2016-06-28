@@ -1,6 +1,4 @@
-" Following lines added by drush vimrc-install on Fri, 19 Sep 2014 00:29:32 +0000.
 set nocompatible
-filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -19,6 +17,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/rainbow_parentheses.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-pathogen'
 
 execute pathogen#infect()
 
@@ -77,7 +77,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-autocmd FileType c,cpp,java,php,js autocmd BufWritePre <buffer> :%s/\s\+$//e
+" Trim trailing white-space on save.
+autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 autocmd VimLeave * mksession! /home/matt/.session.vim
 autocmd FileType md set filetype=markdown
@@ -114,5 +115,3 @@ set tags+=/home/matt/www/tags;
 
 " For security.
 set modelines=0
-
-
