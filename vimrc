@@ -9,10 +9,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 Plugin 'mileszs/ack.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
@@ -95,7 +91,7 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 set wrap linebreak nolist
 set colorcolumn=80
-let &showbreak = '|> '
+let &showbreak = '\'
 let &breakat = ' '
 nnoremap <F8> :setl noai nocin nosi inde=<CR>
 set backupdir=~/.vim/tmp,.
@@ -108,6 +104,9 @@ set t_Co=256
 hi Folded ctermbg=233 ctermfg=248
 
 set shiftwidth=2
+set expandtab
+set tabstop=4
+autocmd Filetype python set shiftwidth=4
 set foldmethod=indent
 
 set tags+=/home/matt/www/tags;
