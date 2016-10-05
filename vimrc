@@ -15,6 +15,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/rainbow_parentheses.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-pathogen'
+Plugin 'neomake/neomake'
+Plugin 'vim-airline/vim-airline'
 
 execute pathogen#infect()
 
@@ -39,8 +41,10 @@ set gdefault
 " Quick Escape.
 inoremap jj <ESC>
 
-" Conveince.
+" Convienience.
 nnoremap ; :
+
+
 
 " Training wheels
 nnoremap <up> <nop>
@@ -109,8 +113,8 @@ set tabstop=4
 autocmd Filetype python set shiftwidth=4
 set foldmethod=indent
 
-set tags+=/home/matt/www/tags;
-
 
 " For security.
 set modelines=0
+
+
