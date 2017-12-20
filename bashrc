@@ -1,3 +1,5 @@
+
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -12,12 +14,13 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+HISTSIZE=100000                   # big big history
+HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+# Save and reload the history after each command finishes
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -116,10 +119,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-PATH="$PATH:~/bin/:~/workspace/gocode/bin/"
+PATH="$PATH:~/bin/:~/workspace/gocode/bin/:~/.local/bin/:~/workspace/Nim/bin/"
 GOPATH=~/workspace/gocode
 
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source "${GITAWAREPROMPT}/main.sh"
 export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

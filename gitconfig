@@ -15,20 +15,20 @@
   ls = log --name-status
   ci = commit
   br = branch -v
-  bc = !git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d
+  bc = !git co master && git pull && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d
   co = checkout
   unstage = reset HEAD
   df = !git diff && git diff --staged
   wd = diff --word-diff
   clear = reset --hard
-  up = !git stash && git fetch && git rebase
-  upp = !git pull
+  up = !git stash && git pull --rebase
   re = remote -v
   mergekeep = merge -s recursive -X ours
   keep = merge -s recursive -X ours
   mergetoss = merge -s recursive -X theirs
   toss = merge -s recursive -X theirs
   changelog = log --pretty=format:'%s by %an (%h)'
+  uncommit = reset --soft HEAD^
 
 [color]
   ui = auto

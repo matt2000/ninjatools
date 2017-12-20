@@ -1,27 +1,33 @@
 set nocompatible
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/rainbow_parentheses.vim'
-Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-pathogen'
 Plugin 'neomake/neomake'
 Plugin 'vim-airline/vim-airline'
+Plugin 'zah/nim.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'python-mode/python-mode'
+Plugin 'Valloric/YouCompleteMe', {
+     \ 'build'      : {
+        \ 'mac'     : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+        \ 'unix'    : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+        \ 'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+        \ 'cygwin'  : './install.sh --clang-completer --system-libclang --omnisharp-completer'
+        \ }
+     \ }
 
-execute pathogen#infect()
-
-" VIM for Drupal below breaks ctags. :-(
-execute pathogen#infect('/home/matt/.drush/vimrc/bundle/{}')
+call vundle#end()
 
 "" Settigns and remaps that it's OK for plugin settings to override.
 set visualbell
@@ -56,6 +62,9 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
+" Terminal Escape
+tnoremap <Esc> <C-\><C-n>
+
 " Syntastic plugin with Drupal Coding Standards
 let g:syntastic_php_phpcs_args="--standard=Drupal --extensions=php,module,inc,install,test,profile,theme"
  " from https://github.com/spf13/spf13-vim/blob/master/.vimrc
@@ -77,6 +86,10 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+
+
 " Trim trailing white-space on save.
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
@@ -117,4 +130,5 @@ set foldmethod=indent
 " For security.
 set modelines=0
 
-
+set tags=./tags
+let g:pymode_python = 'python3'
