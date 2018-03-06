@@ -11,11 +11,11 @@
   defaultToUpstream = true
 [alias]
   st = status -sb -uno
-  ll = log --pretty=format:'%C(yellow)%h %Cblue%an%Cgreen%d %Creset%s'
+  ll = log --pretty=format:'%C(yellow)%h %Cblue%ar %an%Cgreen%d %Creset%s'
   ls = log --name-status
   ci = commit
   br = branch -v
-  bc = !git co master && git pull && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d
+  bc = !git co master && git pull && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git remote prune origin && git gc --prune=now
   co = checkout
   unstage = reset HEAD
   df = !git diff && git diff --staged
