@@ -66,7 +66,7 @@ inoremap <right> <nop>
 tnoremap <Esc> <C-\><C-n>
 
 " Syntastic plugin with Drupal Coding Standards
-let g:syntastic_php_phpcs_args="--standard=Drupal --extensions=php,module,inc,install,test,profile,theme"
+"let g:syntastic_php_phpcs_args="--standard=Drupal --extensions=php,module,inc,install,test,profile,theme"
  " from https://github.com/spf13/spf13-vim/blob/master/.vimrc
 if has('statusline')
   set laststatus=2
@@ -82,6 +82,7 @@ if has('statusline')
   let g:syntastic_enable_signs=1
   set statusline+=%=%-14.(%l,%c%V%)\ %p%% " Right aligned file nav info
 endif
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -131,4 +132,35 @@ set foldmethod=indent
 set modelines=0
 
 set tags=./tags
+
 let g:pymode_python = 'python3'
+let g:pymode_options = 1
+let g:pymode_motion = 1
+let g:pymode_doc = 1
+let g:pymode_folding = 1
+let g:pymode_doc_bind = 'K'
+" Neomake will handle linting, see below.
+let g:pymode_lint_on_write = 0
+
+"let g:syntastic_python_checkers = ['pylama', 'mypy']
+"let g:syntastic_aggregate_errors = 1
+"let g:syntastic_debug = 33
+
+" Neomake config
+function! MyOnBattery()
+  return readfile('/sys/class/power_supply/AC/online') == ['0']
+endfunction
+
+if MyOnBattery()
+  call neomake#configure#automake('w')
+else
+  call neomake#configure#automake('nw', 1000)
+endif
+
+let g:neomake_open_list = 2
+let g:neomake_python_mypy_maker = {
+   \ 'exe': 'mypy',
+   \ 'args': ['--check-untyped-defs', '--allow-untyped-defs', '--follow-imports=skip'],
+   \ 'errorformat': '%E%f:%l: error: %m,%W%f:%l: warning: %m,%I%f:%l: note: %m',
+   \ }
+let g:neomake_python_enabled_makers = ['python', 'pylama', 'mypy']
