@@ -17,7 +17,7 @@ Plugin 'neomake/neomake'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zah/nim.vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'python-mode/python-mode'
+"Plugin 'python-mode/python-mode'
 Plugin 'Valloric/YouCompleteMe', {
      \ 'build'      : {
         \ 'mac'     : './install.sh --clang-completer --system-libclang --omnisharp-completer',
@@ -27,7 +27,24 @@ Plugin 'Valloric/YouCompleteMe', {
         \ }
      \ }
 
+Plugin 'SirVer/ultisnips'
+" Snippets for ultisnips
+Plugin 'honza/vim-snippets'
+Plugin 'sbdchd/neoformat'
+Plugin 'tell-k/vim-autopep8'
+
 call vundle#end()
+
+" Allow YCM for all filetypes.
+let g:ycm_filetype_blacklist = {}
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger=";;"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
+"set runtimepath+=~/.config/nvim/UltiSnips
 
 "" Settigns and remaps that it's OK for plugin settings to override.
 set visualbell
@@ -38,9 +55,6 @@ set undofile
 nnoremap / /\v
 vnoremap / /\v
 
-" Bounce between brackets.
-nnoremap <tab> %
-vnoremap <tab> %
 " Replace All.
 set gdefault
 
@@ -49,18 +63,8 @@ inoremap jj <ESC>
 
 " Convienience.
 nnoremap ; :
+nnoremap <C-f> :Autopep8
 
-
-
-" Training wheels
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 
 " Terminal Escape
 tnoremap <Esc> <C-\><C-n>
@@ -101,11 +105,11 @@ autocmd FileType pp set filetype=puppet
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+"let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+"let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 set wrap linebreak nolist
 set colorcolumn=80
@@ -133,14 +137,14 @@ set modelines=0
 
 set tags=./tags
 
-let g:pymode_python = 'python3'
-let g:pymode_options = 1
-let g:pymode_motion = 1
-let g:pymode_doc = 1
-let g:pymode_folding = 1
-let g:pymode_doc_bind = 'K'
-" Neomake will handle linting, see below.
-let g:pymode_lint_on_write = 0
+"let g:pymode_python = 'python3'
+"let g:pymode_options = 1
+"let g:pymode_motion = 1
+"let g:pymode_doc = 1
+"let g:pymode_folding = 1
+"let g:pymode_doc_bind = 'K'
+"" Neomake will handle linting, see below.
+"let g:pymode_lint_on_write = 0
 
 "let g:syntastic_python_checkers = ['pylama', 'mypy']
 "let g:syntastic_aggregate_errors = 1
@@ -160,7 +164,20 @@ endif
 let g:neomake_open_list = 2
 let g:neomake_python_mypy_maker = {
    \ 'exe': 'mypy',
-   \ 'args': ['--check-untyped-defs', '--allow-untyped-defs', '--follow-imports=skip'],
+   \ 'args': ['--check-untyped-defs', '--allow-untyped-defs',
+   \          '--ignore-missing', '--follow-imports=skip'],
    \ 'errorformat': '%E%f:%l: error: %m,%W%f:%l: warning: %m,%I%f:%l: note: %m',
    \ }
 let g:neomake_python_enabled_makers = ['python', 'pylama', 'mypy']
+
+let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
+
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
+
+" Color
+highlight Search ctermbg=242 cterm=bold
+
+
