@@ -1,7 +1,8 @@
 set nocompatible
+filetype off
 
 " set the runtime path to include Vundle and initialize
-set runtimepath+=~/.config/nvim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -32,6 +33,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'sbdchd/neoformat'
 Plugin 'tell-k/vim-autopep8'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 
@@ -152,6 +154,10 @@ set tags=./tags
 
 " Neomake config
 function! MyOnBattery()
+  if has('mac')
+    return
+    " @TODO
+  endif
   return readfile('/sys/class/power_supply/AC/online') == ['0']
 endfunction
 
