@@ -34,6 +34,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'sbdchd/neoformat'
 Plugin 'tell-k/vim-autopep8'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'psf/black'
 
 call vundle#end()
 
