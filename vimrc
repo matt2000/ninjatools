@@ -17,8 +17,8 @@ Plugin 'tpope/vim-pathogen'
 Plugin 'neomake/neomake'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zah/nim.vim'
-Plugin 'vim-syntastic/syntastic'
-"Plugin 'python-mode/python-mode'
+" Syntastic is now replaced, except for Drupal.
+"Plugin 'vim-syntastic/syntastic' 
 Plugin 'Valloric/YouCompleteMe', {
      \ 'build'      : {
         \ 'mac'     : './install.sh --clang-completer --system-libclang --omnisharp-completer',
@@ -140,15 +140,8 @@ set modelines=0
 
 set tags=./tags
 
-"let g:pymode_python = 'python3'
-"let g:pymode_options = 1
-"let g:pymode_motion = 1
-"let g:pymode_doc = 1
-"let g:pymode_folding = 1
-"let g:pymode_doc_bind = 'K'
-"" Neomake will handle linting, see below.
-"let g:pymode_lint_on_write = 0
 
+"" Neomake will handle linting python, see below.
 "let g:syntastic_python_checkers = ['pylama', 'mypy']
 "let g:syntastic_aggregate_errors = 1
 "let g:syntastic_debug = 33
@@ -177,7 +170,7 @@ let g:neomake_python_mypy_maker = {
    \ }
 let g:neomake_python_enabled_makers = ['python', 'pylama', 'mypy']
 
-let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
+let g:neoformat_enabled_python = ['docformatter']
 
 augroup fmt
   autocmd!
