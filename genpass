@@ -5,13 +5,11 @@ if [ -z $1 ]; then
   exit 0
 fi
 
-if [ ! -c ~/.genpass ]; then
-  echo "Error, no salt."
-  salt=''
-  #@todo generate
-else
-  salt=`cat ~/.genpass`
+if [ ! -c ~/.config/genpass_salt ]; then
+  mkdir ~/.config
+  echo `head -c9 /dev/urandom |base64` > ~/.config/genpass_salt
 fi
+salt=`cat ~/.config/genpass_salt`
 
 site=$1
 len=18
