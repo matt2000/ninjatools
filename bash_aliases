@@ -8,4 +8,6 @@ alias vim="nvim -c ':sp term://bash|wincmd J|8wincmd -|wincmd k'"
 source ~/ninjatools/autovenv.sh
 alias cd="autovenv"
 
-source ~/.local_aliases
+if [ -f ~/.local_aliases ]; then
+  source ~/.local_aliases
+fi
